@@ -1,0 +1,84 @@
+{
+  "categories": [
+    {
+      "id": "apps",
+      "name": "Appetizers",
+      "items": [
+        {"id":"a1","name":"Bruschetta","price":"8.00","image":"https://picsum.photos/seed/a1/400/300"},
+        {"id":"a2","name":"Calamari","price":"12.00","image":"https://picsum.photos/seed/a2/400/300"},
+        {"id":"a3","name":"Soup","price":"7.00","image":"https://picsum.photos/seed/a3/400/300"}
+      ]
+    },
+    {
+      "id": "mains",
+      "name": "Mains",
+      "items": [
+        {"id":"m1","name":"Lasagna","price":"18.00","image":"https://picsum.photos/seed/m1/400/300"},
+        {"id":"m2","name":"Steak","price":"32.00","image":"https://picsum.photos/seed/m2/400/300"},
+        {"id":"m3","name":"Salmon","price":"24.00","image":"https://picsum.photos/seed/m3/400/300"}
+      ]
+    },
+    {
+      "id": "desserts",
+      "name": "Desserts",
+      "items": [
+        {"id":"d1","name":"Tiramisu","price":"9.00","image":"https://picsum.photos/seed/d1/400/300"},
+        {"id":"d2","name":"Cheesecake","price":"9.00","image":"https://picsum.photos/seed/d2/400/300"}
+      ]
+    },
+    {
+      "id": "apps1",
+      "name": "Appetizers",
+      "items": [
+        {"id":"a11","name":"Bruschetta","price":"8.00","image":"https://picsum.photos/seed/a1/400/300"},
+        {"id":"a2","name":"Calamari","price":"12.00","image":"https://picsum.photos/seed/a2/400/300"},
+        {"id":"a3","name":"Soup","price":"7.00","image":"https://picsum.photos/seed/a3/400/300"}
+      ]
+    },
+    {
+      "id": "apps3",
+      "name": "Appetizers",
+      "items": [
+        {"id":"a1","name":"Bruschetta","price":"8.00","image":"https://picsum.photos/seed/a1/400/300"},
+        {"id":"a2","name":"Calamari","price":"12.00","image":"https://picsum.photos/seed/a2/400/300"},
+        {"id":"a3","name":"Soup","price":"7.00","image":"https://picsum.photos/seed/a3/400/300"}
+      ]
+    },
+    {
+      "id": "apps2",
+      "name": "Appetizers",
+      "items": [
+        {"id":"a1","name":"Bruschetta","price":"8.00","image":"https://picsum.photos/seed/a1/400/300"},
+        {"id":"a2","name":"Calamari","price":"12.00","image":"https://picsum.photos/seed/a2/400/300"},
+        {"id":"a3","name":"Soup","price":"7.00","image":"https://picsum.photos/seed/a3/400/300"}
+      ]
+    },
+    {
+      "id": "apps9",
+      "name": "Appetizers",
+      "items": [
+        {"id":"a1","name":"Bruschetta","price":"8.00","image":"https://picsum.photos/seed/a1/400/300"},
+        {"id":"a2","name":"Calamari","price":"12.00","image":"https://picsum.photos/seed/a2/400/300"},
+        {"id":"a3","name":"Soup","price":"7.00","image":"https://picsum.photos/seed/a3/400/300"}
+      ]
+    },
+    {
+      "id": "apps5",
+      "name": "Appetizers",
+      "items": [
+        {"id":"a1","name":"Bruschetta","price":"8.00","image":"https://picsum.photos/seed/a1/400/300"},
+        {"id":"a2","name":"Calamari","price":"12.00","image":"https://picsum.photos/seed/a2/400/300"},
+        {"id":"a3","name":"Soup","price":"7.00","image":"https://picsum.photos/seed/a3/400/300"}
+      ]
+    },
+    {
+      "id": "apps7",
+      "name": "Appetizers",
+      "items": [
+        {"id":"a1","name":"Bruschetta","price":"8.00","image":"https://picsum.photos/seed/a1/400/300"},
+        {"id":"a2","name":"Calamari","price":"12.00","image":"https://picsum.photos/seed/a2/400/300"},
+        {"id":"a3","name":"Soup","price":"7.00","image":"https://picsum.photos/seed/a3/400/300"}
+      ]
+    }
+  ]
+}

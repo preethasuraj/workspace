@@ -117,20 +117,11 @@ fun LoadingScreen() {
 
 }
 
-@Preview
+
 @Composable
 fun EmployeeList(
-    employees: EmployeesList = EmployeesList(
-        listOf(
-            Employee(
-                name = "name",
-                uuid = "222",
-                email = "email",
-                smallUrl = "",
-                largeUrl = ""
-            )
-        )
-    ), onRowClick: (String) -> Unit = {}
+    employees: EmployeesList,
+    onRowClick: (String) -> Unit = {}
 ) {
     LazyColumn(modifier = Modifier
         .padding(5.dp)) {
@@ -142,16 +133,10 @@ fun EmployeeList(
 
     }
 }
-@Preview()
+
 @Composable
 fun EmployeeRow(
-    employee: Employee = Employee(
-        name = "name",
-        uuid = "222",
-        email = ",",
-        smallUrl = "",
-        largeUrl = ""
-    ), onRowClick: (String) -> Unit = {}
+    employee: Employee , onRowClick: (String) -> Unit = {}
 ) {
     Card(
         modifier = Modifier

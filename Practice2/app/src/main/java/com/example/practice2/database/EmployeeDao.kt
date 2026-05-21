@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.example.practice2.network.Employee
 import kotlinx.coroutines.flow.Flow
 
-@Dao
+@Dao()
 interface EmployeeDao {
     @Query("Select * from Employee")
     fun getEmployees(): Flow<List<EmployeeEntity>>

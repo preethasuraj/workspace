@@ -1,0 +1,83 @@
+{
+"hotels": [
+{
+"id": "h1",
+"name": "Riverside Boutique Hotel",
+"city": "Portland",
+"country": "USA",
+"star_rating": 4,
+"description": "A stylish boutique hotel on the riverfront offering modern rooms and a rooftop bar with scenic city views.",
+
+"images": [
+"https://picsum.photos/seed/riverside1/800/600",
+"https://picsum.photos/seed/riverside2/800/600",
+"https://picsum.photos/seed/riverside3/800/600"
+]
+},
+{
+"id": "h2",
+"name": "Sunset Bay Resort",
+"city": "Málaga",
+"country": "Spain",
+"star_rating": 5,
+"description": "A beachfront resort featuring spacious suites, multiple pools, and direct access to golden sands and evening sunsets.",
+"images": [
+"https://picsum.photos/seed/sunsetbay1/800/600",
+"https://picsum.photos/seed/sunsetbay2/800/600",
+"https://picsum.photos/seed/sunsetbay3/800/600"
+]
+},
+{
+"id": "h3",
+"name": "Metro Business Hotel",
+"city": "Singapore",
+"country": "Singapore",
+"star_rating": 4,
+"description": "Conveniently located in the business district, with fast Wi-Fi, a business center, and flexible meeting rooms.",
+"images": [
+"https://picsum.photos/seed/metrobiz1/800/600",
+"https://picsum.photos/seed/metrobiz2/800/600",
+"https://picsum.photos/seed/metrobiz3/800/600"
+]
+},
+{
+"id": "h4",
+"name": "Pinecrest Mountain Lodge",
+"city": "Banff",
+"country": "Canada",
+"star_rating": 3,
+"description": "Cozy lodge near hiking trails and ski slopes, offering warm common areas and rustic wood-accented rooms.",
+"images": [
+"https://picsum.photos/seed/pinecrest1/800/600",
+"https://picsum.photos/seed/pinecrest2/800/600",
+"https://picsum.photos/seed/pinecrest3/800/600"
+]
+},
+{
+"id": "h5",
+"name": "Clearpoint Airport Hotel",
+"city": "Frankfurt",
+"country": "Germany",
+"star_rating": 4,
+"description": "Modern airport hotel with 24-hour shuttle service, soundproof rooms, and quick access to terminals.",
+"images": [
+"https://picsum.photos/seed/clearpoint1/800/600",
+"https://picsum.photos/seed/clearpoint2/800/600",
+"https://picsum.photos/seed/clearpoint3/800/600"
+]
+},
+{
+"id": "h6",
+"name": "Greenway Budget Inn",
+"city": "Lisbon",
+"country": "Portugal",
+"star_rating": 2,
+"description": "Economical option in a friendly neighborhood, offering clean rooms and easy access to public transport.",
+"images": [
+"https://picsum.photos/seed/greenway1/800/600",
+"https://picsum.photos/seed/greenway2/800/600",
+"https://picsum.photos/seed/greenway3/800/600"
+]
+}
+]
+}

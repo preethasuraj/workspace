@@ -130,7 +130,7 @@ fun EmployeeRow(employee: Employee) {
                    .size(50.dp)
            )
            Column(
-               modifier = Modifier.padding(2.dp).weight(0.5f),
+               modifier = Modifier.padding(2.dp).weight(0.5••f),
                verticalArrangement = Arrangement.Center,
                horizontalAlignment = Alignment.CenterHorizontally,
            ) {
