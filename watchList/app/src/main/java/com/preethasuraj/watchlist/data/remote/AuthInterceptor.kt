@@ -14,10 +14,13 @@ class AuthInterceptor @Inject constructor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
+        // The WebSocket handshake already carries its own token; don't add a duplicate.
+        if (original.url.queryParameter("token") != null) {
+            return chain.proceed(original)
+        }
         val url = original.url.newBuilder()
             .addQueryParameter("token", BuildConfig.FINNHUB_API_KEY)
             .build()
-        val request = original.newBuilder().url(url).build()
-        return chain.proceed(request)
+        return chain.proceed(original.newBuilder().url(url).build())
     }
 }

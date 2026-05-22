@@ -1,16 +1,18 @@
 package com.preethasuraj.watchlist.presentation.watchlist
 
-import com.preethasuraj.watchlist.domain.model.WatchedInstrument
+import com.preethasuraj.watchlist.domain.model.ConnectionState
+import com.preethasuraj.watchlist.domain.model.WatchlistItem
 
 /**
  * Immutable state for the watchlist screen.
  *
- * Loading is the brief initial state before the first DB emission; empty is
- * `!isLoading && items.isEmpty()`; content is a non-empty [items]. Live price updates,
- * connection status, and per-row staleness are layered on in the streaming phase.
+ * Loading is the brief initial state before the first emission; empty is
+ * `!isLoading && items.isEmpty()`; content is a non-empty [items]. [connection] drives the
+ * reconnecting/offline banner, and each [WatchlistItem] carries its own staleness/movement.
  */
 data class WatchlistUiState(
-    val items: List<WatchedInstrument> = emptyList(),
+    val items: List<WatchlistItem> = emptyList(),
     val isLoading: Boolean = true,
+    val connection: ConnectionState = ConnectionState.Disconnected,
     val error: String? = null,
 )

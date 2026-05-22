@@ -58,9 +58,8 @@ class SearchViewModel @Inject constructor(
     val uiState: StateFlow<SearchUiState> = combine(
         query,
         searchPhase,
-        repository.observeWatchlist(),
-    ) { currentQuery, phase, watched ->
-        val watchedSymbols = watched.mapTo(HashSet()) { it.instrument.symbol }
+        repository.observeWatchedSymbols(),
+    ) { currentQuery, phase, watchedSymbols ->
         when (phase) {
             SearchPhase.Idle -> SearchUiState(query = currentQuery)
             SearchPhase.Loading -> SearchUiState(query = currentQuery, isSearching = true)

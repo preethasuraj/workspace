@@ -17,9 +17,9 @@ interface WatchlistDao {
     @Query("SELECT EXISTS(SELECT 1 FROM watchlist WHERE symbol = :symbol)")
     fun isWatched(symbol: String): Flow<Boolean>
 
-    /** Current symbol set, e.g. to (re)subscribe the price stream on startup. */
+    /** Reactive symbol set, used to keep the live price subscriptions in sync. */
     @Query("SELECT symbol FROM watchlist")
-    suspend fun getSymbols(): List<String>
+    fun observeSymbols(): Flow<List<String>>
 
     /** Ignores conflicts so re-adding an existing symbol preserves its original addedAt. */
     @Insert(onConflict = OnConflictStrategy.IGNORE)

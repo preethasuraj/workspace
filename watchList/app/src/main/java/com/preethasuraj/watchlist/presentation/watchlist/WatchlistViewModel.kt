@@ -6,7 +6,7 @@ import com.preethasuraj.watchlist.domain.repository.WatchlistRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,13 +16,16 @@ class WatchlistViewModel @Inject constructor(
     private val repository: WatchlistRepository,
 ) : ViewModel() {
 
-    val uiState: StateFlow<WatchlistUiState> = repository.observeWatchlist()
-        .map { items -> WatchlistUiState(items = items, isLoading = false) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS),
-            initialValue = WatchlistUiState(isLoading = true),
-        )
+    val uiState: StateFlow<WatchlistUiState> = combine(
+        repository.observeWatchlist(),
+        repository.connectionState,
+    ) { items, connection ->
+        WatchlistUiState(items = items, isLoading = false, connection = connection)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS),
+        initialValue = WatchlistUiState(isLoading = true),
+    )
 
     fun remove(symbol: String) {
         viewModelScope.launch { repository.remove(symbol) }

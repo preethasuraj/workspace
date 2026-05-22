@@ -36,6 +36,10 @@ android {
 
         // Exposed at compile time as BuildConfig.FINNHUB_API_KEY.
         buildConfigField("String", "FINNHUB_API_KEY", "\"$finnhubApiKey\"")
+
+        // Demo/fake-data mode. Enable with `-PuseFakeData=true` (no key needed).
+        val useFakeData = (project.findProperty("useFakeData") ?: "false").toString()
+        buildConfigField("Boolean", "USE_FAKE_DATA", useFakeData)
     }
 
     buildTypes {

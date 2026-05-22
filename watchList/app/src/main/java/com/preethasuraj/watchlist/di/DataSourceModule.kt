@@ -1,22 +1,34 @@
 package com.preethasuraj.watchlist.di
 
+import com.preethasuraj.watchlist.BuildConfig
+import com.preethasuraj.watchlist.data.source.FakeMarketDataSource
 import com.preethasuraj.watchlist.data.source.FinnhubMarketDataSource
 import com.preethasuraj.watchlist.data.source.MarketDataSource
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Provider
 import javax.inject.Singleton
 
 /**
- * Binds the [MarketDataSource] interface to its real implementation. When the demo/fake
- * source is introduced, this binding is where the swap happens.
+ * Selects the live Finnhub data source or the offline fake one. Demo mode is used when
+ * `USE_FAKE_DATA` is set (`-PuseFakeData=true`) or when no API key is configured — so the
+ * app runs out of the box without a key. Providers ensure only the chosen one is created.
  */
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataSourceModule {
+object DataSourceModule {
 
-    @Binds
+    @Provides
     @Singleton
-    abstract fun bindMarketDataSource(impl: FinnhubMarketDataSource): MarketDataSource
+    fun provideMarketDataSource(
+        real: Provider<FinnhubMarketDataSource>,
+        fake: Provider<FakeMarketDataSource>,
+    ): MarketDataSource =
+        if (BuildConfig.USE_FAKE_DATA || BuildConfig.FINNHUB_API_KEY.isBlank()) {
+            fake.get()
+        } else {
+            real.get()
+        }
 }
