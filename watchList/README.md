@@ -130,10 +130,25 @@ reconnects with exponential backoff + jitter and re-subscribes the full symbol s
 - The socket is **not foreground/lifecycle scoped** — it remains open while the app process
   lives and the watchlist is non-empty.
 
-## Not yet implemented
+## Tests
 
-- **Unit tests** — planned coverage: repository merge, connection-driven staleness,
-  reconnect/backoff, ViewModel state transitions, and search debounce/`flatMapLatest`.
+JVM unit tests (`app/src/test`) run with plain JUnit4 — no Robolectric or instrumentation —
+using `kotlinx-coroutines-test` for virtual time and [Turbine](https://github.com/cashapp/turbine)
+for asserting on flows. Collaborators are hand-written fakes (`testutil/`) rather than mocks,
+so the tests exercise real behaviour and stay readable.
+
+Coverage:
+
+- **Pure logic** — REST mappers (`toInstrumentOrNull` display-name fallbacks, `toQuoteOrNull`
+  all-zero→null and seconds→millis conversion), `PriceCache` (seed/tick/remove and
+  previous-close preservation across ticks), and `WatchlistItem` change/percent math.
+- **`WatchlistRepositoryImpl`** — the Room + `PriceCache` + connection merge, connection-driven
+  staleness, movement derivation, and that add/remove keep the stream's subscriptions aligned.
+- **ViewModels** — `SearchViewModel` debounce (rapid typing searches once), loading→success
+  and error→retry transitions, and watched-state marking; `WatchlistViewModel` loading/content
+  states and connection changes.
+
+Run them with `./gradlew test` (or `./gradlew testDebugUnitTest`).
 
 ## AI / tooling assistance
 
