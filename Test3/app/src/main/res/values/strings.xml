@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">Test3</string>
-    <string name="error">Error in fetching data. Try again later!</string>
-    <string name="empty">There are no properties to display</string>
-</resources>
