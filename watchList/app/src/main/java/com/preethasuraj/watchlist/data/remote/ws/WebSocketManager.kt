@@ -67,7 +67,7 @@ class WebSocketManager @Inject constructor(
         synchronized(lock) {
             if (!desiredSymbols.add(symbol)) return
             val socket = webSocket
-            if (socket == null) connect() else socket.send(subscribeFrame(symbol))
+            socket?.send(subscribeFrame(symbol)) ?: connect()
         }
     }
 

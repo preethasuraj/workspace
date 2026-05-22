@@ -26,7 +26,7 @@ Hilt 2.59.2, Room 2.8.4, Retrofit 3 + OkHttp 5 + kotlinx.serialization, minSdk 2
 Demo mode runs the full experience with **no Finnhub dependency** — no API key, network,
 market hours, or rate limits. It swaps in a `FakeMarketDataSource`: ~12 well-known tickers
 (AAPL, MSFT, NVDA, …) that are searchable, addable, and stream a synthetic random-walk
-price every ~750ms. You'll see prices update live, green/red movement, the two-line
+price every ~1000ms. You'll see prices update live, green/red movement, the two-line
 price/change row, and a steady "Connected" state — exactly the real experience, offline.
 
 Enable it any of these ways:
@@ -68,11 +68,7 @@ Compose collects it with `collectAsStateWithLifecycle()`. ViewModels are provide
 
 **The core idea.** The watchlist (slow, persisted in Room) and prices (volatile: a one-shot
 REST snapshot followed by a continuous WebSocket feed held in `PriceCache`) are two
-different data sources merged into one observable stream. The repository does:
-
-```
-combine(dao.observeAll(), priceCache.prices, connectionState) -> List<WatchlistItem>
-```
+different data sources merged into one observable stream. 
 
 Adding a symbol persists it, fetches a REST snapshot to seed price + previous close, and
 the WebSocket subscribes to it; live ticks then flow into the cache and the merged list
@@ -81,10 +77,18 @@ updates. Staleness is derived from connection state (see tradeoffs).
 ## States handled
 
 Loading, empty, and error (with retry) on search; loading/empty/content on the watchlist;
-per-item missing-price ("—"), connection banner (connecting / reconnecting with attempt /
-offline), and per-row staleness when the live feed isn't delivering. The WebSocket
-reconnects with exponential backoff + jitter and re-subscribes the full symbol set on each
-(re)open.
+per-item missing-price ("—"), a connection banner (connecting / reconnecting), and per-row
+staleness when the live feed isn't delivering. The WebSocket reconnects with exponential
+backoff + jitter and re-subscribes the full symbol set on each (re)open.
+
+Connectivity is **inferred from the socket, not from the OS network stack** (there's no
+`ConnectivityManager` monitoring). So a genuine network loss surfaces as "Reconnecting…"
+rather than a distinct "offline" state — the retry loop simply keeps running until the
+network returns. The retry count is deliberately not shown in the banner: it's noise to the
+user and grows unbounded while offline. Throughout any non-connected state, rows keep
+showing their last-known prices (from the in-memory cache / Room), flagged stale. A proper
+OS-level offline state (pausing reconnects when there's no network) is listed under future
+enhancements.
 
 ## Key design decisions & tradeoffs
 
@@ -98,7 +102,7 @@ reconnects with exponential backoff + jitter and re-subscribes the full symbol s
 - **Staleness is connection-driven, not trade-timestamp driven.** A symbol that simply
   isn't trading is *not* stale — its last price is still the market price. A row is stale
   only when we hold a price but the feed isn't currently delivering (connecting /
-  reconnecting / offline). This avoids false "stale" flags on quiet symbols.
+  reconnecting). This avoids false "stale" flags on quiet symbols.
 - **kotlinx.serialization** over Gson/Moshi — compile-time, reflection-free, and
   Kotlin-aware (respects non-null types and default values, which back the DTO robustness).
 - **No injected dispatcher in the data layer** — Room and Retrofit suspend functions are

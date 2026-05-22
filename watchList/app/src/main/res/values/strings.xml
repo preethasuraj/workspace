@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">WatchList</string>
+
+    <!-- Watchlist screen -->
+    <string name="watchlist_title">Watchlist</string>
+    <string name="watchlist_empty">Your watchlist is empty.\nTap Search to add instruments.</string>
+
+    <!-- Search screen -->
+    <string name="search_title">Search</string>
+    <string name="search_field_label">Search stocks (e.g. AAPL)</string>
+    <string name="search_empty_hint">Search for a stock symbol or company name.</string>
+    <string name="search_no_matches">No matches for \"%1$s\".</string>
+
+    <!-- Connection banner -->
+    <string name="connection_connecting">Connecting…</string>
+    <string name="connection_reconnecting">Reconnecting… showing last known prices</string>
+
+    <!-- Row supporting text: "<name> · stale" -->
+    <string name="row_stale">%1$s · stale</string>
+
+    <!-- Actions -->
+    <string name="action_search">Search</string>
+    <string name="action_add">Add</string>
+    <string name="action_remove">Remove</string>
+    <string name="action_retry">Retry</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_back">Back</string>
 </resources>

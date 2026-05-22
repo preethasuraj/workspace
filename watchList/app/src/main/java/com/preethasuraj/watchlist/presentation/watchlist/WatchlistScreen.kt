@@ -24,9 +24,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.preethasuraj.watchlist.R
 import com.preethasuraj.watchlist.domain.model.ConnectionState
 import com.preethasuraj.watchlist.domain.model.PriceMovement
 import com.preethasuraj.watchlist.domain.model.WatchlistItem
@@ -56,16 +58,18 @@ private fun WatchlistScreenContent(
     onRemove: (String) -> Unit,
 ) {
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Watchlist") }) },
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.watchlist_title)) }) },
         floatingActionButton = {
-            ExtendedFloatingActionButton(onClick = onSearch) { Text("Search") }
+            ExtendedFloatingActionButton(onClick = onSearch) {
+                Text(stringResource(R.string.action_search))
+            }
         },
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
             when {
                 state.isLoading -> LoadingState()
                 state.items.isEmpty() ->
-                    EmptyState("Your watchlist is empty.\nTap Search to add instruments.")
+                    EmptyState(stringResource(R.string.watchlist_empty))
                 else -> Column(modifier = Modifier.fillMaxSize()) {
                     ConnectionBanner(state.connection)
                     WatchlistList(items = state.items, onRemove = onRemove)
@@ -77,15 +81,19 @@ private fun WatchlistScreenContent(
 
 @Composable
 private fun ConnectionBanner(connection: ConnectionState) {
-    val message: String = when (connection) {
-        ConnectionState.Connected -> return
-        ConnectionState.Connecting -> "Connecting…"
-        is ConnectionState.Reconnecting -> "Reconnecting… (attempt ${connection.attempt})"
-        ConnectionState.Disconnected -> "Offline — showing last known prices"
+    if (connection is ConnectionState.Connected) return
+    // Connectivity is inferred from the socket, not the OS. A genuine network drop surfaces
+    // as Reconnecting (the retry loop keeps running); Disconnected only appears as a brief
+    // startup blip before the socket opens. Both mean the live feed is unavailable and rows
+    // are showing last-known (stale) prices, so they share the reconnect message. The retry
+    // count is intentionally omitted — it's noise to the user and can grow large offline.
+    val message = when (connection) {
+        ConnectionState.Connecting -> stringResource(R.string.connection_connecting)
+        else -> stringResource(R.string.connection_reconnecting)
     }
     val container = when (connection) {
-        is ConnectionState.Reconnecting -> MaterialTheme.colorScheme.errorContainer
-        else -> MaterialTheme.colorScheme.secondaryContainer
+        ConnectionState.Connecting -> MaterialTheme.colorScheme.secondaryContainer
+        else -> MaterialTheme.colorScheme.errorContainer
     }
     Surface(color = container, modifier = Modifier.fillMaxWidth()) {
         Text(
@@ -120,7 +128,7 @@ private fun WatchlistRow(item: WatchlistItem, onRemove: (String) -> Unit) {
     }
     val alpha = if (item.isStale) 0.45f else 1f
     val supporting = if (item.isStale) {
-        "${item.instrument.displayName} · stale"
+        stringResource(R.string.row_stale, item.instrument.displayName)
     } else {
         item.instrument.displayName
     }
@@ -149,7 +157,7 @@ private fun WatchlistRow(item: WatchlistItem, onRemove: (String) -> Unit) {
                     }
                 }
                 TextButton(onClick = { onRemove(item.instrument.symbol) }) {
-                    Text("Remove")
+                    Text(stringResource(R.string.action_remove))
                 }
             }
         },

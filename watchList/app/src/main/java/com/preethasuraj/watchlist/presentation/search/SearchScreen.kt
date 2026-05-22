@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -18,9 +22,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.preethasuraj.watchlist.R
 import com.preethasuraj.watchlist.domain.model.Instrument
 import com.preethasuraj.watchlist.presentation.common.EmptyState
 import com.preethasuraj.watchlist.presentation.common.ErrorState
@@ -55,9 +61,14 @@ private fun SearchScreenContent(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Search") },
+                title = { Text(stringResource(R.string.search_title)) },
                 navigationIcon = {
-                    TextButton(onClick = onBack) { Text("Back") }
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.cd_back),
+                        )
+                    }
                 },
             )
         },
@@ -66,7 +77,7 @@ private fun SearchScreenContent(
             OutlinedTextField(
                 value = state.query,
                 onValueChange = onQueryChange,
-                label = { Text("Search stocks (e.g. AAPL)") },
+                label = { Text(stringResource(R.string.search_field_label)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
             )
@@ -76,9 +87,9 @@ private fun SearchScreenContent(
                     state.isSearching -> LoadingState()
                     state.error != null -> ErrorState(message = state.error, onRetry = onRetry)
                     state.results.isEmpty() && state.query.isBlank() ->
-                        EmptyState("Search for a stock symbol or company name.")
+                        EmptyState(stringResource(R.string.search_empty_hint))
                     state.results.isEmpty() ->
-                        EmptyState("No matches for \"${state.query}\".")
+                        EmptyState(stringResource(R.string.search_no_matches, state.query))
                     else -> SearchResultsList(
                         results = state.results,
                         onAdd = onAdd,
@@ -104,11 +115,11 @@ private fun SearchResultsList(
                 trailingContent = {
                     if (row.isWatched) {
                         TextButton(onClick = { onRemove(row.instrument.symbol) }) {
-                            Text("Remove")
+                            Text(stringResource(R.string.action_remove))
                         }
                     } else {
                         TextButton(onClick = { onAdd(row.instrument) }) {
-                            Text("Add")
+                            Text(stringResource(R.string.action_add))
                         }
                     }
                 },

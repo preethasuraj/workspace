@@ -70,6 +70,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    // Material Icons (e.g. the back arrow); material3 doesn't bundle these.
+    implementation(libs.androidx.compose.material.icons.core)
 
     // Lifecycle-aware state collection in Compose (collectAsStateWithLifecycle).
     implementation(libs.androidx.lifecycle.runtime.compose)
